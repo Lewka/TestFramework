@@ -17,7 +17,7 @@ public class SomeTest extends BaseTest {
     private static String companyName;
 
     @Test
-    public void someTest() {
+    public void komPlatezhiInvalidValuesInputTest() {
         SoftAssert softAssert = new SoftAssert();
 
         KomPlatezhiPayment komPlatezhiPayment =
@@ -44,7 +44,7 @@ public class SomeTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(dependsOnMethods = "someTest", priority = 1)
+    @Test(dependsOnMethods = "komPlatezhiInvalidValuesInputTest", priority = 1)
     public void searchCompanyTest() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -60,7 +60,7 @@ public class SomeTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test(dependsOnMethods = "someTest", priority = 2)
+    @Test(dependsOnMethods = "komPlatezhiInvalidValuesInputTest", priority = 2)
     public void companyNotPresentedTest() {
         SoftAssert softAssert = new SoftAssert();
 
