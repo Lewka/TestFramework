@@ -23,7 +23,7 @@ public class ResourcesReader {
         return properties;
     }
 
-    public static String getBroser() {
-        return loadResources(CAPABILITIES).getProperty("browser");
+    public static Browser getBrowser() {
+        return Browser.parse(loadResources(CAPABILITIES).getProperty("browser"));
     }
 }

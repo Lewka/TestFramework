@@ -29,9 +29,6 @@ public class SomeTest extends BaseTest {
                 .selectRegion(MOSCOW)
                 .getFirstCompanyName();
 
-        softAssert.fail();
-        softAssert.assertAll();
-
         KomPlatezhiPaymentStep komPlatezhiPaymentStep = komPlatezhiStep.selectCompany(ZKHU)
                 .fillFields(komPlatezhiPayment);
 
