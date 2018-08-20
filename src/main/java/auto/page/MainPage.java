@@ -9,7 +9,7 @@ public class MainPage extends AbstractPage {
     private UIElement payments;
 
     public void openPayments() {
-        payments.scrollTo().click();
+        payments.waitForElementDisplayed().scrollTo().click();
     }
 
 

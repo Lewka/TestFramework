@@ -18,7 +18,6 @@ import static auto.core.utils.ElementUtils.*;
 @SuppressWarnings("unchecked")
 public class ElementFieldDecorator extends DefaultFieldDecorator {
 
-
     public ElementFieldDecorator(ElementLocatorFactory factory) {
         super(factory);
     }

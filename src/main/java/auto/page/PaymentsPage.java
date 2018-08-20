@@ -30,7 +30,7 @@ public class PaymentsPage extends AbstractPage {
         for (int i = 0; i < 3; i++) {
             Optional<UIElement> result = searchPaymentType(paymentType);
             if (result.isPresent()) {
-                result.get().click();
+                result.get().waitForElementDisplayed().click();
                 return;
             } else {
                 nextSlide.waitForElementDisplayed().click();
@@ -40,12 +40,12 @@ public class PaymentsPage extends AbstractPage {
     }
 
     public void searchCompany(String companyName) {
-        searchInput.sendKeys(companyName);
+        searchInput.waitForElementToBeEnabled().sendKeys(companyName);
     }
 
     public boolean isSearchingCompanyIsFirst(String companyName) {
         try {
-            return searchResults.get(0).getText().contains(companyName);
+            return searchResults.get(0).waitForElementDisplayed().getText().contains(companyName);
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
@@ -53,7 +53,7 @@ public class PaymentsPage extends AbstractPage {
 
     public void openCompanyByName(String companyName) {
         UIElement searchResult = searchResults.stream()
-                .filter(company -> company.getText().contains(companyName))
+                .filter(company -> company.waitForElementToBeEnabled().getText().contains(companyName))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Couldn't find a company with name " + companyName));
         searchResult.waitForElementDisplayed().click();

@@ -42,7 +42,7 @@ public class KomPlatezhiPaymentPage extends AbstractPage {
             fillFieldIfExist(amountOfInsuranceInput, komPlatezhiPayment.getAmountOfInsurance());
             fillFieldIfExist(amountOfPaymentInput, komPlatezhiPayment.getAmountOfPayment());
         }
-        providerPayerCodeInput.sendKeys(ENTER);
+        providerPayerCodeInput.waitForElementToBeEnabled().sendKeys(ENTER);
     }
 
     public boolean isWrongProviderPayerCodeErrorPresented() {

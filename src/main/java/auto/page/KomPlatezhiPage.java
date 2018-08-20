@@ -3,7 +3,6 @@ package auto.page;
 import auto.bo.KomPlatezhiCompany;
 import auto.bo.Region;
 import auto.core.element.UIElement;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -26,11 +25,11 @@ public class KomPlatezhiPage extends AbstractPage {
     }
 
     public void selectCompany(KomPlatezhiCompany komPlatezhiCompany) {
-        WebElement companyWebElement = companies.stream()
+        UIElement companyWebElement = companies.stream()
                 .filter(company -> company.waitForElementDisplayed().getText().equalsIgnoreCase(komPlatezhiCompany.getCompanyName()))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Couldn't find a company with name " + komPlatezhiCompany));
-        companyWebElement.click();
+        companyWebElement.waitForElementToBeClickable().click();
     }
 
     public boolean isCompanyPresented(KomPlatezhiCompany komPlatezhiCompany) {
@@ -42,11 +41,11 @@ public class KomPlatezhiPage extends AbstractPage {
     public void selectRegion(Region region) {
         regionSelector.waitForElementDisplayed().click();
         cityLocator = String.format(cityLocator, region.getName(), region.getName());
-        WebElement regionElement = getThreadDriver().findElement(xpath(cityLocator));
-        regionElement.click();
+        UIElement regionElement = new UIElement(getThreadDriver().findElement(xpath(cityLocator)));
+        regionElement.waitForElementToBeClickable().click();
     }
 
     public String getFirstCompanyName() {
-        return companies.get(0).getText();
+        return companies.get(0).waitForElementToBeEnabled().getText();
     }
 }
