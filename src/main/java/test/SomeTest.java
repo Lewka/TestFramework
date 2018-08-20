@@ -14,6 +14,8 @@ import static java.lang.String.format;
 
 public class SomeTest extends BaseTest {
 
+    private static String companyName;
+
     @Test
     public void someTest() {
         SoftAssert softAssert = new SoftAssert();
@@ -21,11 +23,14 @@ public class SomeTest extends BaseTest {
         KomPlatezhiPayment komPlatezhiPayment =
                 new KomPlatezhiPayment("1", "1", "1", "-1");
 
-        String firstCompanyName = mainPageStep.openMainPage()
+        companyName = mainPageStep.openMainPage()
                 .openPayments()
                 .selectKommPlatezhi()
                 .selectRegion(MOSCOW)
                 .getFirstCompanyName();
+
+        softAssert.fail();
+        softAssert.assertAll();
 
         KomPlatezhiPaymentStep komPlatezhiPaymentStep = komPlatezhiStep.selectCompany(ZKHU)
                 .fillFields(komPlatezhiPayment);
@@ -39,20 +44,34 @@ public class SomeTest extends BaseTest {
         softAssert.assertTrue(komPlatezhiPaymentStep.isWrongAmountOfPaymentErrorPresented(),
                 "Wrong amount input error wasn't presented on the page");
 
-        PaymentsStep paymentsStep = komPlatezhiPaymentStep.openPayments()
-                .searchForCompany(firstCompanyName);
+        softAssert.assertAll();
+    }
 
-        softAssert.assertTrue(paymentsStep.isSearchingCompanyFirstInList(firstCompanyName),
-                format("%s company should be first in the list", firstCompanyName));
+    @Test(dependsOnMethods = "someTest", priority = 1)
+    public void searchCompanyTest() {
+        SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(paymentsStep.openCompanyByName(firstCompanyName)
-                .isCorrectCompanyPageOpened(firstCompanyName), format("Opened page isn't [%s] company page", firstCompanyName));
+        PaymentsStep paymentsStep = mainPageStep.openPayments()
+                .searchForCompany(companyName);
 
-        softAssert.assertFalse(paymentsStep.openPayments()
+        softAssert.assertTrue(paymentsStep.isSearchingCompanyFirstInList(companyName),
+                format("[%s] company should be first in the list", companyName));
+
+        softAssert.assertTrue(paymentsStep.openCompanyByName(companyName)
+                .isCorrectCompanyPageOpened(companyName), format("Opened page isn't [%s] company page", companyName));
+
+        softAssert.assertAll();
+    }
+
+    @Test(dependsOnMethods = "someTest", priority = 2)
+    public void companyNotPresentedTest() {
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertFalse(mainPageStep.openPayments()
                         .selectKommPlatezhi()
                         .selectRegion(SAINT_PETERBUGR)
-                        .isCompanyPresented(KomPlatezhiCompany.from(firstCompanyName)),
-                format("%s company shouldn't be presented on the page", firstCompanyName));
+                        .isCompanyPresented(KomPlatezhiCompany.from(companyName)),
+                format("[%s] company shouldn't be presented on the page", companyName));
 
         softAssert.assertAll();
     }
