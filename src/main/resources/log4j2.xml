@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <properties>
+        <property name="fileName">logs/log.log</property>
+        <property name="filePattern">logs/$${date:yyyy-MM}/CTC-%d{MM-dd-yyyy}-%i.log.gz</property>
+        <property name="layotpatternHighlighted">%d{HH:mm:ss.SSS} [%t] %highlight{%-5level} %c{1.} - %msg%n
+        </property>
+        <property name="layotpattern">%d{HH:mm:ss.SSS} [%t] %-5level %c - %msg%n</property>
+        <property name="filesize">5 MB</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${layotpatternHighlighted}"/>
+        </Console>
+        <RollingFile name="FileLog" fileName="${fileName}" filePattern="${filePattern}" append="true">
+            <PatternLayout pattern="${layotpattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="${filesize}"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="DEFAULT-LOGGER" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLog"/>
+        </Logger>
+        <Logger name="org.apache.http.wire" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLog"/>
+        </Logger>
+        <Logger name="org.apache.http.headers" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLog"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileLog"/>
+        </Root>
+    </Loggers>
+</Configuration>
