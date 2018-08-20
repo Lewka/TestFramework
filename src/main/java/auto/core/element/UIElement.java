@@ -1,13 +1,17 @@
 package auto.core.element;
 
+import auto.core.driver.DriverFactory;
 import org.openqa.selenium.*;
 import org.openqa.selenium.internal.WrapsElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.function.Function;
 
 import static auto.core.driver.DriverFactory.getThreadDriver;
 
@@ -16,6 +20,8 @@ public class UIElement implements WrapsElement, WebElement {
     private WebElement wrappedElement;
 
     private static final long DEFAULT_WAIT_TIME = 10L;
+    private static final long DEFAULT_POOLING_TIME = 5L;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(UIElement.class);
 
     public UIElement(final WebElement wrappedElement) {
@@ -167,6 +173,23 @@ public class UIElement implements WrapsElement, WebElement {
         return this;
     }
 
+    public UIElement waitForElementToBeEnabled() {
+        LOGGER.debug("Waiting for element [{}] to be enabled", wrappedElement);
+        new FluentWait<>(DriverFactory.getThreadDriver()).withTimeout(Duration.ofSeconds(DEFAULT_WAIT_TIME))
+                .pollingEvery(Duration.ofMillis(DEFAULT_POOLING_TIME))
+                .ignoring(NoSuchMethodException.class)
+                .until((Function<WebDriver, Object>) webDriver -> wrappedElement.isEnabled());
+        return this;
+    }
+
+    public UIElement waitForElementToDisappear() {
+        WebDriverWait wait = new WebDriverWait(getThreadDriver(), 5);
+        LOGGER.debug("Waiting for element [{}] to disappear", wrappedElement);
+        wait.ignoring(NoSuchElementException.class);
+        wait.until(ExpectedConditions.stalenessOf(wrappedElement));
+        return this;
+    }
+
     public UIElement waitForElementDisplayed() {
         WebDriverWait wait = new WebDriverWait(getThreadDriver(), DEFAULT_WAIT_TIME);
         LOGGER.debug("Waiting [{}] sec for element [{}] to be visible", DEFAULT_WAIT_TIME, wrappedElement);
@@ -180,14 +203,6 @@ public class UIElement implements WrapsElement, WebElement {
         LOGGER.debug("Waiting [{}] sec for element [{}] to be visible", sec, wrappedElement);
         wait.ignoring(Exception.class);
         wait.until(ExpectedConditions.visibilityOf(wrappedElement));
-        return this;
-    }
-
-    public UIElement waitForElementClickable() {
-        LOGGER.debug("Waiting [{}] sec for element [{}] to be clickable", DEFAULT_WAIT_TIME, wrappedElement);
-        WebDriverWait wait = new WebDriverWait(getThreadDriver(), DEFAULT_WAIT_TIME);
-        wait.ignoring(Exception.class);
-        wait.until(ExpectedConditions.elementToBeClickable(wrappedElement));
         return this;
     }
 

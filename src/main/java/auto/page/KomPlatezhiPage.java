@@ -34,8 +34,9 @@ public class KomPlatezhiPage extends AbstractPage {
     }
 
     public boolean isCompanyPresented(KomPlatezhiCompany komPlatezhiCompany) {
+        waitForPageLoaded();
         return companies.stream()
-                .anyMatch(company -> company.waitForElementDisplayed().getText().equalsIgnoreCase(komPlatezhiCompany.getCompanyName()));
+                .anyMatch(company -> company.waitForElementToBeEnabled().getText().equalsIgnoreCase(komPlatezhiCompany.getCompanyName()));
     }
 
     public void selectRegion(Region region) {

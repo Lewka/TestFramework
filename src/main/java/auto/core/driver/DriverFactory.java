@@ -32,8 +32,7 @@ public class DriverFactory {
     private DriverFactory() {
     }
 
-
-    private static WebDriver initDriver() {
+    private WebDriver initDriver() {
         String capability = getBroser();
         WebDriver driver;
         if (capability.equalsIgnoreCase(FIREFOX)) {
@@ -73,7 +72,7 @@ public class DriverFactory {
 
     public synchronized static WebDriver getThreadDriver() {
         if (threadDriver.get() == null) {
-            threadDriver.set(initDriver());
+            threadDriver.set(new DriverFactory().initDriver());
             return threadDriver.get();
         }
         return threadDriver.get();

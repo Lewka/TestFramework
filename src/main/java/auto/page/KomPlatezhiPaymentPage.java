@@ -5,8 +5,7 @@ import auto.core.element.UIElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
-import static auto.core.Wrapper.sleep;
-import static auto.core.driver.DriverFactory.getThreadDriver;
+import static auto.core.Wrapper.waitForTitleToBe;
 import static org.openqa.selenium.Keys.ENTER;
 
 public class KomPlatezhiPaymentPage extends AbstractPage {
@@ -59,13 +58,13 @@ public class KomPlatezhiPaymentPage extends AbstractPage {
     }
 
     public boolean isCorrectCompanyPageOpened(String companyName) {
-        return getThreadDriver().getTitle().contains(companyName);
+        return waitForTitleToBe(companyName);
     }
 
     private void fillFieldIfExist(UIElement field, String payerCode) {
+        waitForPageLoaded();
         if (field.isEnabled()) {
-            sleep(1);
-            field.sendKeys(payerCode);
+            field.waitForElementToBeEnabled().sendKeys(payerCode);
         }
     }
 

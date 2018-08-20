@@ -15,7 +15,7 @@ public class BaseTest {
     protected MainPageStep mainPageStep = new MainPageStep();
     protected KomPlatezhiStep komPlatezhiStep = new KomPlatezhiStep();
 
-    private static final int DEFAULT_WAIT_TIME = 10;
+    private static final int DEFAULT_WAIT_TIME = 5;
 
     @BeforeClass
     public void setUp() {

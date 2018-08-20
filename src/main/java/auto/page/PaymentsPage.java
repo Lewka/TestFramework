@@ -3,7 +3,6 @@ package auto.page;
 import auto.bo.PaymentType;
 import auto.core.element.UIElement;
 import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -27,11 +26,14 @@ public class PaymentsPage extends AbstractPage {
     private List<UIElement> searchResults;
 
     public void selectPaymentType(PaymentType paymentType) {
+        waitForPageLoaded();
         for (int i = 0; i < 3; i++) {
             Optional<UIElement> result = searchPaymentType(paymentType);
             if (result.isPresent()) {
                 result.get().click();
                 return;
+            } else {
+                nextSlide.waitForElementDisplayed().click();
             }
         }
         throw new ElementNotVisibleException("Couldn't find a element with payment time " + paymentType);
@@ -59,7 +61,7 @@ public class PaymentsPage extends AbstractPage {
 
     private Optional<UIElement> searchPaymentType(PaymentType paymentType) {
         return paymentTypes.stream()
-                .filter(el -> el.getText().equalsIgnoreCase(paymentType.getName()))
+                .filter(el -> el.waitForElementToBeEnabled().getText().equalsIgnoreCase(paymentType.getName()))
                 .findFirst();
     }
 }
