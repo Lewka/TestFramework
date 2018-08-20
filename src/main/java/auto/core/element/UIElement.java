@@ -40,6 +40,7 @@ public class UIElement implements WrapsElement, WebElement {
 
     @Override
     public void submit() {
+        LOGGER.debug("Submitting [{}]", wrappedElement);
         getWrappedElement().submit();
     }
 
@@ -56,16 +57,21 @@ public class UIElement implements WrapsElement, WebElement {
 
     @Override
     public void clear() {
+        LOGGER.debug("Clearing text on element [{}]", wrappedElement);
         getWrappedElement().clear();
     }
 
     @Override
     public String getTagName() {
-        return getWrappedElement().getTagName();
+        LOGGER.debug("Getting tag of element [{}]", wrappedElement);
+        String tagName = getWrappedElement().getTagName();
+        LOGGER.debug("Got tag [{}]", tagName);
+        return tagName;
     }
 
     @Override
     public String getAttribute(String name) {
+        LOGGER.debug("Getting attribute [{}] of element [{}]", name, wrappedElement);
         return getWrappedElement().getAttribute(name);
     }
 
@@ -105,11 +111,13 @@ public class UIElement implements WrapsElement, WebElement {
 
     @Override
     public List<WebElement> findElements(By by) {
+        LOGGER.debug("Find elements by [{}] on element [{}]", by, wrappedElement);
         return getWrappedElement().findElements(by);
     }
 
     @Override
     public WebElement findElement(By by) {
+        LOGGER.debug("Find element by [{}] on element [{}]", by, wrappedElement);
         return getWrappedElement().findElement(by);
     }
 
@@ -129,26 +137,39 @@ public class UIElement implements WrapsElement, WebElement {
 
     @Override
     public Point getLocation() {
-        return getWrappedElement().getLocation();
+        LOGGER.debug("Getting location of [{}]", wrappedElement);
+        Point location = getWrappedElement().getLocation();
+        LOGGER.debug("Got [X : {} - Y : {}]", location.getX(), location.getY());
+        return location;
     }
 
     @Override
     public Dimension getSize() {
-        return getWrappedElement().getSize();
+        LOGGER.debug("Getting size of [{}]", wrappedElement);
+        Dimension size = getWrappedElement().getSize();
+        LOGGER.debug("Got [H :{}, W : {}]", size.getHeight(), size.getWidth());
+        return size;
     }
 
     @Override
     public Rectangle getRect() {
-        return getWrappedElement().getRect();
+        LOGGER.debug("Getting location and size of [{}]", wrappedElement);
+        Rectangle rect = getWrappedElement().getRect();
+        LOGGER.debug("Got [H : {}, W : {}, X : {}, Y : {}]", rect.getHeight(), rect.getWidth(), rect.getX(), rect.getY());
+        return rect;
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return getWrappedElement().getCssValue(propertyName);
+        LOGGER.debug("Getting CSS value [{}] of element [{}]", propertyName, wrappedElement);
+        String cssValue = getWrappedElement().getCssValue(propertyName);
+        LOGGER.debug("Got [{}]", cssValue);
+        return cssValue;
     }
 
     @Override
     public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
+        LOGGER.debug("Getting screenshot as [{}]", target);
         return getWrappedElement().getScreenshotAs(target);
     }
 
