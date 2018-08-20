@@ -15,6 +15,8 @@
         <slf4j.version>1.7.25</slf4j.version>
         <commons-io.version>2.6</commons-io.version>
         <webdrivermanager.version>2.2.5</webdrivermanager.version>
+        <test-ng.version>6.14.3</test-ng.version>
+        <selenium.verion>3.14.0</selenium.verion>
     </properties>
 
     <build>
@@ -40,12 +42,12 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.14.0</version>
+            <version>${selenium.verion}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.14.3</version>
+            <version>${test-ng.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -68,5 +70,4 @@
             <version>${webdrivermanager.version}</version>
         </dependency>
     </dependencies>
-
 </project>
