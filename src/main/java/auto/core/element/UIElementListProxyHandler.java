@@ -11,6 +11,9 @@ import java.util.List;
 
 import static auto.core.element.ElementFieldDecorator.createUIElement;
 
+/**
+ * Custom proxy handler to handle proxying a List of UIElement
+ */
 public class UIElementListProxyHandler<T extends UIElement> implements InvocationHandler {
 
     private final Class<T> elementClass;

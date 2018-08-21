@@ -15,6 +15,9 @@ import java.util.function.Function;
 
 import static auto.core.driver.DriverFactory.getThreadDriver;
 
+/**
+ * Custom decorator of WebElement
+ */
 public class UIElement implements WrapsElement, WebElement {
 
     private WebElement wrappedElement;
