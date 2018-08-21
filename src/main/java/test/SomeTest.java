@@ -7,6 +7,7 @@ import auto.steps.PaymentsStep;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static auto.bo.ErrorMessage.*;
 import static auto.bo.KomPlatezhiCompany.ZKHU;
 import static auto.bo.Region.MOSCOW;
 import static auto.bo.Region.SAINT_PETERBUGR;
@@ -32,13 +33,13 @@ public class SomeTest extends BaseTest {
         KomPlatezhiPaymentStep komPlatezhiPaymentStep = komPlatezhiStep.selectCompany(ZKHU)
                 .fillFields(komPlatezhiPayment);
 
-        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongProviderPayerCodeErrorPresented(),
+        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongProviderPayerCodeErrorPresented(WRONG_INPUT_ERROR),
                 "Wrong provider payer error wasn't presented on the page");
 
-        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongProviderPeriodErrorPresented(),
+        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongProviderPeriodErrorPresented(WRONG_INPUT_ERROR_2),
                 "Wrong provider period input error wasn't presented on the page");
 
-        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongAmountOfPaymentErrorPresented(),
+        softAssert.assertTrue(komPlatezhiPaymentStep.isWrongAmountOfPaymentErrorPresented(WRONG_INPUT_ERROR_3),
                 "Wrong amount input error wasn't presented on the page");
 
         softAssert.assertAll();

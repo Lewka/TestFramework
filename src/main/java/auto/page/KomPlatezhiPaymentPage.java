@@ -1,5 +1,6 @@
 package auto.page;
 
+import auto.bo.ErrorMessage;
 import auto.bo.KomPlatezhiPayment;
 import auto.core.element.UIElement;
 import org.openqa.selenium.By;
@@ -30,10 +31,6 @@ public class KomPlatezhiPaymentPage extends AbstractPage {
 
     private static final String WRONG_INPUT_ERROR_LOCATOR = "ancestor::div[@*='FormFieldWrapper']//div[@*='UIFormRowError']";
 
-    private static final String WRONG_INPUT_ERROR_TEXT = "Поле неправильно заполнено";
-    private static final String WRONG_INPUT_ERROR_TEXT_2 = "Поле заполнено некорректно";
-    private static final String WRONG_INPUT_ERROR_TEXT_3 = "Поле заполнено неверно";
-
     public void fillFields(KomPlatezhiPayment komPlatezhiPayment) {
         if (payTab.isEnabled()) {
             payTab.click();
@@ -45,16 +42,16 @@ public class KomPlatezhiPaymentPage extends AbstractPage {
         providerPayerCodeInput.waitForElementToBeEnabled().sendKeys(ENTER);
     }
 
-    public boolean isWrongProviderPayerCodeErrorPresented() {
-        return isErrorMessagePresentedOnElementAndContainsMessage(providerPayerCodeInput, WRONG_INPUT_ERROR_TEXT);
+    public boolean isWrongProviderPayerCodeErrorPresented(ErrorMessage errorMessage) {
+        return isErrorMessagePresentedOnElementAndContainsMessage(providerPayerCodeInput, errorMessage.getErrorMessage());
     }
 
-    public boolean isWrongProviderPeriodErrorPresented() {
-        return isErrorMessagePresentedOnElementAndContainsMessage(providerPeriodInput, WRONG_INPUT_ERROR_TEXT_2);
+    public boolean isWrongProviderPeriodErrorPresented(ErrorMessage errorMessage) {
+        return isErrorMessagePresentedOnElementAndContainsMessage(providerPeriodInput, errorMessage.getErrorMessage());
     }
 
-    public boolean isWrongAmountOfPaymentErrorPresented() {
-        return isErrorMessagePresentedOnElementAndContainsMessage(amountOfPaymentInput, WRONG_INPUT_ERROR_TEXT_3);
+    public boolean isWrongAmountOfPaymentErrorPresented(ErrorMessage errorMessage) {
+        return isErrorMessagePresentedOnElementAndContainsMessage(amountOfPaymentInput, errorMessage.getErrorMessage());
     }
 
     public boolean isCorrectCompanyPageOpened(String companyName) {

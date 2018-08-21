@@ -1,5 +1,6 @@
 package auto.steps;
 
+import auto.bo.ErrorMessage;
 import auto.bo.KomPlatezhiPayment;
 import auto.page.KomPlatezhiPaymentPage;
 
@@ -13,19 +14,19 @@ public class KomPlatezhiPaymentStep extends BaseStep {
         return this;
     }
 
-    public boolean isWrongProviderPayerCodeErrorPresented() {
+    public boolean isWrongProviderPayerCodeErrorPresented(ErrorMessage errorMessage) {
         LOGGER.info("Checking is wrong provider payer code error presented on the page");
-        return komPlatezhiPaymentPage.isWrongProviderPayerCodeErrorPresented();
+        return komPlatezhiPaymentPage.isWrongProviderPayerCodeErrorPresented(errorMessage);
     }
 
-    public boolean isWrongProviderPeriodErrorPresented() {
+    public boolean isWrongProviderPeriodErrorPresented(ErrorMessage errorMessage) {
         LOGGER.info("Checking is wrong provider period error presented on the page");
-        return komPlatezhiPaymentPage.isWrongProviderPeriodErrorPresented();
+        return komPlatezhiPaymentPage.isWrongProviderPeriodErrorPresented(errorMessage);
     }
 
-    public boolean isWrongAmountOfPaymentErrorPresented() {
+    public boolean isWrongAmountOfPaymentErrorPresented(ErrorMessage errorMessage) {
         LOGGER.info("Checking is wrong amount of payment error presented on the page");
-        return komPlatezhiPaymentPage.isWrongAmountOfPaymentErrorPresented();
+        return komPlatezhiPaymentPage.isWrongAmountOfPaymentErrorPresented(errorMessage);
     }
 
     public boolean isCorrectCompanyPageOpened(String companyName) {
